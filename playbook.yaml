@@ -1,0 +1,41 @@
+---
+
+- name: install dependencies
+  hosts: all
+  become: true
+  tasks:
+    - name: update apt
+      apt:
+        force_apt_get: yes
+        update-cache: yes
+    - name: install tomcat
+      apt:
+        force_apt_get: yes
+        name: tomcat8
+        state: present
+    - name: install maven
+      apt:
+        force_apt_get: yes
+        name: maven
+        state: present
+
+- name: prepare sources
+  hosts: all
+  become: true
+  tasks:
+    - name: clone from git
+      git:
+        repo: https://github.com/boxfuse/boxfuse-sample-java-war-hello.git
+        dest: /var/boxfuse
+    - name: build artifact
+      shell: mvn -f /var/boxfuse/pom.xml clean package
+
+- name: run application
+  hosts: all
+  become: true
+  tasks:
+    - name: copy to tomcat
+      copy:
+        remote_src: yes
+        dest: /var/lib/tomcat8/webapps/
+        src: /var/boxfuse/target/hello-1.0.war
