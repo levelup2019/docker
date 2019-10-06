@@ -1,0 +1,17 @@
+version: '2'
+services:
+  web:
+    image: tomcat:8.5
+    ports:
+      - '80:8080'
+    volumes:
+      - shared:/usr/local/tomcat/webapps
+  back:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: ["cp", "./boxfuse-sample-java-war-hello/target/hello-1.0.war", "/var/webapps"]
+    volumes:
+      - shared:/var/webapps
+volumes:
+  shared:
