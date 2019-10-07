@@ -1,0 +1,8 @@
+---
+# tasks file for builder
+- name: clone from git
+  git:
+    repo: https://github.com/boxfuse/boxfuse-sample-java-war-hello.git
+    dest: /var/boxfuse
+- name: build artifact
+  shell: mvn -f /var/boxfuse/pom.xml clean package

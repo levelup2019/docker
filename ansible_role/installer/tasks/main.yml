@@ -1,0 +1,13 @@
+---
+# tasks file for installer
+- name: install tomcat
+  apt:
+    update-cache: yes
+    force_apt_get: yes
+    name: tomcat8
+    state: present
+- name: install maven
+  apt:
+    force_apt_get: yes
+    name: maven
+    state: present

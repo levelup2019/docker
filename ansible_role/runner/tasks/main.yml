@@ -1,0 +1,7 @@
+---
+# tasks file for runner
+- name: copy to tomcat
+  copy:
+    remote_src: yes
+    dest: /var/lib/tomcat8/webapps/
+    src: /var/boxfuse/target/hello-1.0.war

@@ -1,0 +1,9 @@
+---
+- name: do all
+  hosts: all
+  become: yes
+
+  roles:
+  - installer
+  - builder
+  - runner
